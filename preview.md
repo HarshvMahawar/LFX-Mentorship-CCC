@@ -103,3 +103,13 @@ EAR is used to encode the verifier's result, offering:
     "endorsements": "verified"
 }
 ```
+
+## References
+
+- [RATS Architecture](https://datatracker.ietf.org/doc/rfc9334/)
+- [Veraison Project](https://github.com/veraison)
+- [Keylime Project](https://github.com/THS-on/keylime/tree/rats)
+- [EAT Specification (IETF)](https://datatracker.ietf.org/doc/draft-ietf-rats-eat/)
+- [EAR](https://datatracker.ietf.org/doc/draft-fv-rats-ear/)
+
+
