@@ -44,8 +44,14 @@ The RATS architecture defines multiple roles involved in remote attestation:
 
 **Keylime** is an open-source remote attestation framework focusing on TPM-based attestation. It consists of:
 
-- **Agent:** Installed on the attesting device to collect and send TPM-based evidence (PCR values, IMA logs).
-- **Verifier:** A server-side component that validates TPM evidence and generates attestation results.
+- **Agent:** Installed on the attesting device to collect and send TPM-based evidence (PCR values, IMA logs).  
+  - **RATS Equivalent:** Attester  
+- **Verifier:** A server-side component that validates TPM evidence and generates attestation results.  
+  - **RATS Equivalent:** Verifier, Relying Party  
+- **Registrar:** Manages the binding of Attestation Keys (AK) to Endorsement Keys (EK) for attestation.  
+  - **RATS Equivalent:** Endorser (TA for AK-EK binding)  
+- **Tenant:** Provides reference values, owns verification policies, and relies on attestation results.  
+  - **RATS Equivalent:** Reference Value Provider, Verifier Owner, Relying Party Owner, Endorser (TA for EK certificate validation)
 
 ### Integration with Veraison
 
