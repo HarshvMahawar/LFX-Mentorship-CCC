@@ -103,7 +103,7 @@ The **Remote Attestation Procedures (RATS)** architecture, defined by the IETF, 
 ### **Ongoing Efforts and Gaps**
 - Standardizing evidence formats.
 - Exploring the use of EAT tokens for attestation results.
-- Transitioning to Conceptual Message Wrapper (CMW) for standardized log formats.
+- Transitioning to Conceptual Messages Wrapper (CMW) for standardized log formats.
 
 ---
 
