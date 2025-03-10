@@ -159,3 +159,14 @@ The **Remote Attestation Procedures (RATS)** architecture, defined by the IETF, 
 The RATS architecture provides a robust framework for remote attestation, and the examined projects (**Veraison**, **Keylime**, and **Jane Attestation Engine**) demonstrate significant progress in adopting these standards. Each project aligns well with RATS roles and protocols, but ongoing efforts to standardize formats and improve interoperability are essential for achieving full compliance.
 
 ---
+
+## **References**
+1. **Veraison:** [GitHub](https://github.com/veraison)  
+2. **Keylime:** [Official Website](https://keylime.dev)  
+3. **Trustee:** [GitHub](https://github.com/confidential-containers/trustee)  
+4. **Jane Attestation Engine:** [GitHub](https://github.com/iolivergithub/jane/)  
+5. **Thore Sommer's Master’s Thesis:** [PDF](https://thson.de/static/masters_thesis_thore_sommer.pdf)  
+6. **RATS Cheatsheet:** [GitHub](https://github.com/CCC-Attestation/rats-cheatsheet?tab=readme-ov-file#rats-cheat-sheet)  
+7. **IETF RATS Endorsements:** [IETF](https://datatracker.ietf.org/doc/draft-ietf-rats-endorsements/)  
+
+---
