@@ -8,16 +8,19 @@ This document provides a detailed analysis of the implementation of the Remote A
 1. [Introduction](#introduction)
 2. [Veraison](#veraison)
    - Overview
+   - Architecture Diagram
    - Key Modules
    - Mapping to RATS Architecture
    - Ongoing Efforts and Gaps
 3. [Keylime](#keylime)
    - Overview
+   - Architecture Diagram
    - Key Components
    - Mapping to RATS Architecture
    - Ongoing Efforts and Gaps
 4. [Jane Attestation Engine](#jane-attestation-engine)
    - Overview
+   - Architecture Diagram
    - Key Modules
    - Mapping to RATS Architecture
    - Ongoing Efforts and Gaps
@@ -34,6 +37,10 @@ The **Remote Attestation Procedures (RATS)** architecture, defined by the IETF, 
 
 ### **Overview**
 **Veraison** is an attestation verification project under the **Confidential Computing Consortium**. It focuses on providing a flexible and extensible Verifier component for remote attestation, supporting multiple attestation token formats and providing APIs for evidence verification and endorsement provisioning.
+
+### **Architecture Diagram**
+![Veraison Architecture](https://github.com/HarshvMahawar/LFX-Mentorship-CCC/blob/main/veraison_architecture.png)  
+*Figure 1: Architecture of Veraison services.*
 
 ### **Key Modules**
 - **Provisioning Interface:** Manages endorsements from supply chain actors.
@@ -67,6 +74,10 @@ The **Remote Attestation Procedures (RATS)** architecture, defined by the IETF, 
 ### **Overview**
 **Keylime** is a comprehensive remote attestation solution for Linux systems, focusing on TPM-based attestation. It ensures cloud infrastructure trustworthiness by continuously collecting and verifying evidence.
 
+### **Architecture Diagram**
+![Keylime Architecture](https://github.com/HarshvMahawar/LFX-Mentorship-CCC/blob/main/keylime_architecture.png)
+*Figure 2: Simplified model of the interactions between components of Keylime.*
+
 ### **Key Components**
 - **Agent:** Runs on the Attester, establishes Attestation Keys (AK), and generates TPM quotes and logs.
 - **Registrar:** Manages trust anchors and metadata for agents.
@@ -92,7 +103,7 @@ The **Remote Attestation Procedures (RATS)** architecture, defined by the IETF, 
 ### **Ongoing Efforts and Gaps**
 - Standardizing evidence formats.
 - Exploring the use of EAT tokens for attestation results.
-- Transitioning to Common Metadata Working Group (CMW) for standardized log formats.
+- Transitioning to Conceptual Message Wrapper (CMW) for standardized log formats.
 
 ---
 
@@ -100,6 +111,10 @@ The **Remote Attestation Procedures (RATS)** architecture, defined by the IETF, 
 
 ### **Overview**
 **Jane Attestation Engine** (a fork and major rewrite of the former A10 Nokia Attestation Engine i.e. NAE) is an experimental remote attestation framework designed to be technology-agnostic. It supports various protocols like MQTT and HTTP REST for attestation and is transitioning into open-source. It integrates with Kubernetes-based cloud products and supports both TPM and SGX-based attestation.
+
+### **Architecture Diagram**
+![JANE Architecture](https://github.com/HarshvMahawar/LFX-Mentorship-CCC/blob/main/jane_architecture.png)
+*Figure 3: Attestation of an Attester using NAE.*
 
 ### **Key Modules**
 - **Attestation Module:** 
