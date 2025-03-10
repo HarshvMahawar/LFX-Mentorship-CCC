@@ -64,8 +64,7 @@ The **Remote Attestation Procedures (RATS)** architecture, defined by the IETF, 
 
 ### **Ongoing Efforts and Gaps**
 - Enhancing support for standardized token formats.
-- Improved management of endorsements and reference values.
-- Integration with Confidential Containers for ARM CCA-based confidential containers.
+- Adding support for implementations of EAR in different programming languages.
 
 ---
 
