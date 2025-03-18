@@ -15,8 +15,7 @@ This document provides a detailed analysis of the implementation of the Remote A
 3. [Keylime](#keylime)
    - Overview
    - Architecture Diagram
-   - Key Components
-   - Mapping to RATS Architecture
+   - Key Components and Mapping to RATS Architecture
    - Ongoing Efforts and Gaps
 4. [Jane Attestation Engine](#jane-attestation-engine)
    - Overview
@@ -78,32 +77,54 @@ The **Remote Attestation Procedures (RATS)** architecture, defined by the IETF, 
 ![Keylime Architecture](https://github.com/HarshvMahawar/LFX-Mentorship-CCC/blob/main/keylime_architecture.png)
 *Figure 2: Simplified model of the interactions between components of Keylime.*
 
-### **Key Components**
-- **Agent:** Runs on the Attester, establishes Attestation Keys (AK), and generates TPM quotes and logs.
-- **Registrar:** Manages trust anchors and metadata for agents.
-- **Verifier:** Validates evidence against predefined policies and generates attestation results.
-- **Tenant:** Configures attestation policies and manages node access.
-- **Supported Evidence Types:**
-  - TPM Quote with Platform Configuration Registers (PCRs).
-  - Integrity Measurement Architecture (IMA) Log.
-  - UEFI Measured Boot Eventlog.
+### **Key Components and Mapping to RATS Architecture**
 
-### **Mapping to RATS Architecture**
-- **Attester Role:**  
-  - The **Agent** serves as the Attester, providing evidence such as TPM quotes and IMA logs.
-- **Verifier Role:**  
-  - Implemented by the **Verifier** component, which appraises evidence based on predefined policies.
-- **Relying Party Role:**  
-  - Also performed by the **Verifier**, which acts on attestation results.
-- **Endorser and Reference Values:**  
-  - Managed by the **Registrar** and **Tenant**.
-- **Conveyance Protocols:**  
-  - Uses secure protocols for component communication.
+- **Attester Role → Agent**
+   - **Agent:**  
+     - Functions as the Attester in RATS, responsible for collecting and transmitting evidence.  
+     - Generates TPM quotes and logs.  
+     - Provides evidence in various formats:  
+       - `TPM2B_ATTEST`, `TPMT_SIGNATURE` (custom TPM format).  
+       - Platform Configuration Registers (PCRs) (binary format via `tpm2-tools`).  
+       - TCG UEFI Eventlog (binary format from the kernel).  
+       - IMA Eventlog (ASCII log format from the kernel).  
+       - Public key, boot time, etc.  
+
+- **Verifier Role → Verifier**
+   - **Verifier:**  
+     - Appraises received evidence against predefined policies.  
+     - Generates attestation results, primarily flagging failures.  
+     - **Runtime Attestation:**  
+       - Evaluates allowed/excluded files, kernel keyrings, verification keys, and IMA-buf entries.  
+       - Implements policy-driven verification.  
+
+- **Relying Party Role → Verifier**
+   - **Verifier as Relying Party:**  
+     - Acts upon attestation results.  
+     - Enforces access control and response mechanisms based on verification outcomes.  
+
+- **Endorser Role → Registrar**
+   - **Registrar:**  
+     - Establishes trust anchors and manages metadata for attesters.  
+     - Handles Attestation Key (AK) and Endorsement Key (EK) binding.  
+
+- **Reference Value Provider Role → Tenant**
+   - **Tenant:**  
+     - Supplies reference values necessary for attestation verification.  
+     - Configures attestation policies and manages node access.  
+     - Validates EK certificates.  
+
+- **Conveyance Protocols → Secure Messaging**
+   - **Protocol for Secure Attestation Messaging:**  
+     - Uses secure transport mechanisms to exchange evidence and attestation results. 
 
 ### **Ongoing Efforts and Gaps**
-- Standardizing evidence formats.
-- Exploring the use of EAT tokens for attestation results.
-- Transitioning to Conceptual Messages Wrapper (CMW) for standardized log formats.
+- **Adopting EAT for Attestation Results**  
+  - Moving towards **structured attestation results** using the **Trust Vector** model.  
+  - Mapping failure types into a **standardized format**.    
+- Integrating **Conceptual Messages Wrapper (CMW)** for structured evidence representation.  
+- Adopting **TCG Canonical Event Log Format** to unify UEFI, IMA, and user-space logs.
+- Registering media types for attestation messages.  .  
 
 ---
 
