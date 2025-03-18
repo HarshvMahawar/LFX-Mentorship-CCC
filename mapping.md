@@ -36,7 +36,7 @@ The **Remote Attestation Procedures (RATS)** architecture, defined by the IETF, 
 **Veraison** is an attestation verification project under the **Confidential Computing Consortium**. It focuses on providing a flexible and extensible Verifier component for remote attestation, supporting multiple attestation token formats and providing APIs for evidence verification and endorsement provisioning.
 
 ### **Architecture Diagram**
-![Veraison Architecture](https://github.com/HarshvMahawar/LFX-Mentorship-CCC/blob/main/veraison_architecture.png)  
+![Veraison Architecture](https://github.com/HarshvMahawar/LFX-Mentorship-CCC/blob/main/veraison_arch_new.png)
 *Figure 1: Architecture of Veraison services.*
 
 ### **Key Modules**
