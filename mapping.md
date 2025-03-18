@@ -115,8 +115,8 @@ The **Remote Attestation Procedures (RATS)** architecture, defined by the IETF, 
      - Validates EK certificates.  
 
 - **Conveyance Protocols → Secure Messaging**
-   - **Protocol for Secure Attestation Messaging:**  
-     - Uses secure transport mechanisms to exchange evidence and attestation results. 
+   - Uses REST APIs for secure attestation data exchange.
+   - Implements mutual TLS (mTLS) authentication to ensure encrypted and authenticated communication between Keylime components.
 
 ### **Ongoing Efforts and Gaps**
 - **Adopting EAT for Attestation Results**  
