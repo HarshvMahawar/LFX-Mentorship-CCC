@@ -42,23 +42,26 @@ The **Remote Attestation Procedures (RATS)** architecture, defined by the IETF, 
 
 ### **Key Modules**
 - **Provisioning Interface:** Manages endorsements from supply chain actors.
-- **Verification Interface:** Processes and verifies Evidence against reference values.
-- **Management Interface:** Manages the configuration and operation of the Verifier.
+- **Verification Interface:** Processes and verifies Evidence against reference values using trust anchors and appraisal policies.
+- **Management Interface:** Manages the appraisal policy for evidence
 - **Veraison Trusted Services (VTS):** Core service managing attestation schemes and plugins.
-- **KV-Store Interfaces:** Used for data retrieval during verification.
+- **KV-Store Interfaces:**
+  - Used for data retrieval during verification
+  - Storing data during provisioning and management.
 - **Supported Attestation Schemes:** ARM CCA, ARM PSA, TPMs (Parsec, EnactTrust), DICE.
 
 ### **Mapping to RATS Architecture**
 - **Attester Role:**  
-  - Does not directly implement the Attester role. Relies on external agents to provide Evidence in supported formats.
+  - Implemented in emulators (https://github.com/veraison/evcli)
 - **Verifier Role:**  
   - Implemented by **VTS**, verifying tokens against endorsements and producing attestation results in the form of EAT Attestation Result (EAR) tokens.
 - **Relying Party Role:**  
   - Provides EAR tokens to relying parties via the verification API.
+  - EAR CLI (https://github.com/veraison/ear/tree/main/arc) to verify EARs
 - **Endorser and Reference Values:**  
   - Managed through the **Endorsement Provisioning API**.
 - **Conveyance Protocols:**  
-  - Uses RESTful APIs aligned with RATS protocols.
+  - Challenge-response API as interaction model (https://www.ietf.org/archive/id/draft-ietf-rats-reference-interaction-models-13.html#section-7.1).
 
 ### **Ongoing Efforts and Gaps**
 - Enhancing support for standardized token formats.
