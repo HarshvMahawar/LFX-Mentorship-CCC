@@ -109,7 +109,6 @@ The **Remote Attestation Procedures (RATS)** architecture, defined by the IETF, 
      - Handles Attestation Key (AK) and Endorsement Key (EK) binding.
 
    - **Tenant:**  
-     - Establishes trust anchors and manages metadata for attesters.
      - Provides the trust anchor for the EK certificate.
 
 - **Reference Value Provider Role → Tenant**
