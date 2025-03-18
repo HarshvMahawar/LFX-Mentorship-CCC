@@ -21,9 +21,7 @@ This document provides a detailed analysis of the implementation of the Remote A
 4. [Jane Attestation Engine](#jane-attestation-engine)
    - Overview
    - Architecture Diagram
-   - Key Modules
-   - Mapping to RATS Architecture
-   - Ongoing Efforts and Gaps
+   - Key Components and Mapping to RATS Architecture
 5. [Conclusion](#conclusion)
 
 ---
@@ -109,48 +107,45 @@ The **Remote Attestation Procedures (RATS)** architecture, defined by the IETF, 
 ## **Jane Attestation Engine**
 
 ### **Overview**
-**Jane Attestation Engine** (a fork and major rewrite of the former A10 Nokia Attestation Engine i.e. NAE) is an experimental remote attestation framework designed to be technology-agnostic. It supports various protocols like MQTT and HTTP REST for attestation and is transitioning into open-source. It integrates with Kubernetes-based cloud products and supports both TPM and SGX-based attestation.
+**Jane Attestation Engine** (a fork and major rewrite of the former A10 Nokia Attestation Engine i.e. NAE) is an experimental remote attestation framework designed to be technology-agnostic.
 
 ### **Architecture Diagram**
-![JANE Architecture](https://github.com/HarshvMahawar/LFX-Mentorship-CCC/blob/main/jane_architecture.png)
-*Figure 3: Attestation of an Attester using NAE.*
+![JANE Architecture](https://github.com/HarshvMahawar/LFX-Mentorship-CCC/blob/main/jane_architecture_new.png)
+*Figure 3: JANE Architecture.*
 
-### **Key Modules**
-- **Attestation Module:** 
-  - Generates claims based on device state and formats evidence.
-- **Verification Module:** 
-  - Appraises evidence against expected values using a rules-based system.
-- **Communication Module:** 
-  - Manages secure exchange of attestation results using MQTT and REST APIs.
-- **Key Concepts:**
-  - **Elements:** Objects that generate and validate evidence.
-  - **Intent:** Describes the type of evidence required.
-  - **Policy:** Fully defined requests based on intents.
-  - **Claim:** Results from policy execution, can represent evidence.
-  - **Rules:** Validate claims using expected values.
-  - **Sessions:** Manage collections of claims and results.
+### **Key Components and Mapping to RATS Architecture**
 
-### **Supported Technologies**
-- **TPM-based Attestation:** Provides API for TPM functions and evidence retrieval (IMA logs, UEFI Eventlogs).
-- **SGX-based Attestation:** Supported via MarbleRun integration.
-- **Protocols:** Supports MQTT and HTTP REST for secure communication.
+- **Attester Role → Protocol + Trust Agents + Element Management**
+   - **Protocol:**  
+     - Acts as the core interface for managing attestation sources.  
+     - Handles requests and retrieval of claims, functioning as the "Attesting Environment" in RATS.
+   - **Trust Agents (e.g., tarzan, ratsd):**  
+     - Responsible for collecting attestation measurements from hardware sources such as TPM, SGX, and other TEEs.  
+     - Serves as the primary source of "Evidence" (claims).
+   - **Element Management (Maybe):**  
+     - Facilitates attestation configuration and process orchestration.
 
-### **Mapping to RATS Architecture**
-- **Attester Role:**  
-  - Managed by the **Attestation Module** which generates claims based on device state.
-- **Verifier Role:**  
-  - Implemented via the **Verification Module** using rules to validate claims.
-- **Relying Party Role:**  
-  - Supported by the **Communication Module** through REST and MQTT protocols.
-- **Endorser and Reference Values:**  
-  - Integrates with external providers for endorsements and reference values.
-- **Conveyance Protocols:**  
-  - Uses MQTT and HTTP REST for secure communication.
+- **Verifier Role → Verification**
+   - The "Verification" component in JANE performs "Evidence Appraisal" by validating claims against predefined rules and reference values.
 
-### **Ongoing Efforts and Gaps**
-- Transitioning to open-source for broader adoption.
-- Improving integration with external endorsers and standardizing evidence formats.
-- Exploring enhanced support for new attestation schemes and TEEs.
+- **Relying Party Role → Protocol + Policy Mechanisms + External Interfaces**
+   - **Protocol:**  
+     - Handles the transmission of attestation results to external entities.
+   - **Policy Mechanisms:**
+     - JANE leaves the final trust decision to external policy mechanisms
+     - Consumes attestation results and applies external policies for "Attestation Results Appraisal."
+   - **External Interfaces:**  
+     - Manages connectivity with third-party systems interacting with JANE.
+
+- **Endorser and Reference Value Provider Roles → External Providers**
+   - **External Trust Sources:**  
+     - JANE integrates with external providers to fetch endorsements and reference values required for verification.
+
+- **Conveyance Protocols → Protocol (L6/L7) + L5 (Sessions)**
+   - **Protocol Layer (L6/L7):**  
+     - This layer handles the application-level protocols for communication. 
+   - **Session Management (L5):**  
+     - JANE uses sessions to bind together multiple requests, indicating a layer 5 (session layer) functionality.
 
 ---
 
