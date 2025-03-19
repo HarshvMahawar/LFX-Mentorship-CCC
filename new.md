@@ -20,7 +20,6 @@ Here's a breakdown of Keylime's components and a mapping to the RATS architectur
             * Data Provision: The agent provides collected evidence to the verifier.
         * **Actionable Insights:**
             * **Evidence Representation:** Keylime currently uses various custom and binary formats. Adopting standardized evidence formats like the Conceptual Message Wrapper (CMW) will significantly improve interoperability. This involves structuring the TPM quotes, logs, and other data into a CMW representation.
-            * **Evidence conveyance:** While Keylime uses mTLS, defining specific RATS conveyance protocols on top of it will be beneficial.
 
 * **Verifier Role:**
     * **Verifier (keylime\_verifier):**
