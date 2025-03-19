@@ -9,7 +9,7 @@ Core principles guiding our RATs mapping:
 
 **1. Keylime: Enhanced RATS Mapping**
 
-Here's a breakdown of Keylime's components and a refined mapping to the RATS architecture, focusing on actionable insights:
+Here's a breakdown of Keylime's components and a mapping to the RATS architecture, focusing on actionable insights:
 
 * **Attester Role:**
     * **Agent (keylime\_agent):**
@@ -70,7 +70,7 @@ Here's a breakdown of Keylime's components and a refined mapping to the RATS arc
 
 **2. Jane Attestation Engine: Enhanced RATS Mapping**
 
-Now, let's refine the RATS mapping for the Jane Attestation Engine:
+the RATS mapping for the Jane Attestation Engine:
 
 * **Attester Role:**
     * **Protocol + Trust Agents (tarzan, ratsd):**
