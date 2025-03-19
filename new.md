@@ -1,11 +1,11 @@
-**Key Principles for Improved Mapping**
+**Key Principles for Mapping to RATS**
 
-Before we get into the specifics of Keylime and JANE, let's outline the core principles guiding our improved mapping:
+Before we get into the specifics of Keylime, JANE and Veraison, let's outline the core principles guiding our RATs mapping:
 
 * **Granularity:** Instead of broad role assignments (e.g., "Verifier Role → Verifier"), we'll pinpoint specific components and their functions within the RATS framework.
 * **Data Flow:** We'll analyze how evidence, endorsements, and attestation results are generated, processed, and conveyed, aligning these flows with RATS conveyance models.
-* **Standardization Focus:** We'll highlight areas where Keylime and JANE can better adopt RATS-recommended standards for data formats, protocols, and interfaces.
-* **Actionable Insights:** The mapping should provide clear directions for developers on what aspects of Keylime and JANE could be modified to enhance RATS compliance.
+* **Standardization Focus:** We'll highlight areas where Keylime, JANE and Veraison can better adopt RATS-recommended standards for data formats, protocols, and interfaces.
+* **Actionable Insights:** The mapping should provide clear directions on what aspects of Keylime ,JANE and Veraison could be modified to enhance RATS compliance.
 
 **1. Keylime: Enhanced RATS Mapping**
 
@@ -43,7 +43,7 @@ Here's a breakdown of Keylime's components and a refined mapping to the RATS arc
             * **Decoupling Policy Enforcement:** Ideally, the policy enforcement logic should be decoupled from the verifier. This would allow external systems or dedicated policy decision points to consume the EAT-formatted attestation results and make access control decisions. This aligns better with the RATS principle of separating verification from policy enforcement.
 
 * **Endorser Role:**
-    * **Registrar (keylime\_registrar and ketlime\_tenant):**
+    * **Registrar (keylime\_registrar + keylime\_tenant):**
         * **RATS Mapping:** Endorsement Provisioning. The registrar is responsible for managing trust anchors and metadata, and the tenant is responsible for providing trust anchors, such as the trust anchor for the EK certificate.
         * **Granular Functions:**
             * Trust anchor management: The registrar establishes trust anchors, while the tenant may provide specific trust anchors (e.g., for EK certificates).
@@ -166,4 +166,3 @@ Veraison is already well-aligned with the RATS architecture, but we can still pr
         * **RATS Mapping:** Conveyance. Veraison primarily uses a challenge-response API as its interaction model.
         * **Actionable Insights:**
             * **Protocol Flexibility:** While challenge-response is a common pattern, ensure that Veraison can support other conveyance protocols and interaction models as needed to accommodate different use cases and environments.
-            * **Secure Communication:** Continue to prioritize secure communication channels for conveying attestation evidence and results, using mechanisms like mTLS.
