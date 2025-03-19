@@ -1,6 +1,6 @@
 **Key Principles for Mapping to RATS**
 
-Before we get into the specifics of Keylime, JANE and Veraison, let's outline the core principles guiding our RATs mapping:
+Core principles guiding our RATs mapping:
 
 * **Granularity:** Instead of broad role assignments (e.g., "Verifier Role → Verifier"), we'll pinpoint specific components and their functions within the RATS framework.
 * **Data Flow:** We'll analyze how evidence, endorsements, and attestation results are generated, processed, and conveyed, aligning these flows with RATS conveyance models.
