@@ -29,4 +29,4 @@ Explore how different open-source remote attestation tools align with the [RATS 
 **Veraison** is an attestation verification project under the **Confidential Computing Consortium**. It focuses on providing a flexible and extensible Verifier component for remote attestation, supporting multiple attestation token formats and providing APIs for evidence verification and endorsement provisioning.
 
 ### **Mapping Diagram**
-![Veraison Architecture](https://github.com/HarshvMahawar/LFX-Mentorship-CCC/blob/main/veraison_final.png)
+![Veraison Architecture](https://github.com/HarshvMahawar/LFX-Mentorship-CCC/blob/main/veraison-final.png)
