@@ -65,6 +65,92 @@ The EAR token includes:
 
 ### `submods` Mapping
 
+sample data as used in `record_create()` method (https://github.com/keylime/keylime/blob/9b4edcdae0294cec26a78e6b0d88c116177812df/keylime/da/examples/file.py#L120):
+
+```json
+{
+  "agent_data": {
+    "v": "TSsIA2PyJ3q8MMvrdhRY7v/7PUhSUUkqL4nsY54ieMc=",
+    "ip": "127.0.0.1",
+    "port": 9002,
+    "operational_state": 3,
+    "public_key": "",
+    "tpm_policy": "{\"mask\": \"0x400\"}",
+    "meta_data": "{}",
+    "ima_sign_verification_keys": "",
+    "revocation_key": "",
+    "accept_tpm_hash_algs": [
+      "sha512",
+      "sha384",
+      "sha256"
+    ],
+    "accept_tpm_encryption_algs": [
+      "ecc",
+      "rsa"
+    ],
+    "accept_tpm_signing_algs": [
+      "ecschnorr",
+      "rsassa"
+    ],
+    "supported_version": "2.2",
+    "ak_tpm": "ARgAAQALAAUAc...VAD1/sMFNh6X+Kwi/dyncQolor2r",
+    "mtls_cert": "-----BEGIN CERTIFICATE-----\nMIIDGzCCAgOgAwIBAgIBADANBgkqhkiG9...74wHxRsHDKbTkzpeXfqzNy8UaV5W+A==\n-----END CERTIFICATE-----\n",
+    "hash_alg": "",
+    "enc_alg": "",
+    "sign_alg": "",
+    "agent_id": "d432fbb3-d2f1-4a97-9ef7-75bd81c00000",
+    "boottime": "",
+    "ima_pcrs": [],
+    "pcr10": "",
+    "next_ima_ml_entry": 0,
+    "learned_ima_keyrings": {},
+    "verifier_id": "default",
+    "attestation_count": 0,
+    "last_received_quote": 0,
+    "last_successful_attestation": 0,
+    "verifier_ip": "127.0.0.1",
+    "verifier_port": "8881",
+    "registrar_data": "",
+    "nonce": "G98b8NslrLpd2PEXSXA7",
+    "b64_encrypted_V": "",
+    "provide_V": true,
+    "num_retries": 0,
+    "pending_event": null,
+    "ssl_context": "<ssl.SSLContext object at 0x7f708c90c0d0>"
+  },
+  "attestation_data": {
+    "code": 200,
+    "status": "Success",
+    "results": {
+      "quote": "r/1RDR4AYACIACw+4Qfa6gIVXFFoxJYDmbiU...AAAAAAA=",
+      "hash_alg": "sha256",
+      "enc_alg": "rsa",
+      "sign_alg": "rsassa",
+      "pubkey": "-----BEGIN PUBLIC KEY-----\nMIIBIjANBgkqhki...h84e2d6hAU5\nUwIDAQAB\n-----END PUBLIC KEY-----\n"
+    }
+  },
+  "runtime_policy_data": {
+    "meta": {
+      "version": 1,
+      "generator": 3,
+      "timestamp": "2025-04-01 18:06:05.189717"
+    },
+    "release": 0,
+    "digests": {},
+    "excludes": [],
+    "keyrings": {},
+    "ima": {
+      "ignored_keyrings": [],
+      "log_hash_alg": "sha1",
+      "dm_policy": null
+    },
+    "ima-buf": {},
+    "verification-keys": ""
+  },
+  "mb_policy_data": null
+}
+```
+
 All TPM-related evidence should be placed in a **single submod** named:
 
 ```json
