@@ -50,7 +50,7 @@ The EAR token includes:
 
 ---
 
-## 🧭 Mapping Summary
+## Mapping Summary
 
 ### EAR Top-Level Claims
 
@@ -65,48 +65,82 @@ The EAR token includes:
 
 ### `submods` Mapping
 
-`submods` is a map of appraisals, keyed by the attester (agent ID in Keylime).
-
-#### Format:
+All TPM-related evidence should be placed in a **single submod** named:
 
 ```json
 "submods": {
-  "<agent_id>": {
-    "ear.status": "...",
-    "ear.trustworthiness-vector": { ... },
-    "ear.appraisal-policy-id": "..."
+  "keylime-tpm": {
+    ...
   }
 }
 ```
-### Mapping Details
 
-| EAR Claim                    | Keylime Source                                     | Notes                                                                 |
-|-----------------------------|----------------------------------------------------|-----------------------------------------------------------------------|
-| `submods.<agent_id>`        | `agent.agent_id`                                   | Unique agent identifier                                               |
-| `ear.status`                | `json_response.status` or result of verifier logic | `"Success"` → `"affirming"`; failures map to `"warning"` or `"contraindicated"` |
+## Trust Vector Mapping Logic
 
 ---
 
-### Example `ear.trustworthiness-vector` (AR4SI categories):
+### `instance_identity`
 
-```json
-{
-  "instance-identity": 2,
-  "executables": 2,
-  "hardware": 2,
-  "configuration": 48
-}
-```
-### AR4SI Trust Levels
+| Condition                                           | TrustClaim                            |
+|-----------------------------------------------------|----------------------------------------|
+| Quote valid, AK present, no revocation              | `TRUSTWORTHY_INSTANCE_CLAIM (2)`      |
+| Quote invalid (e.g., missing or crypto error)       | `UNTRUSTWORTHY_INSTANCE_CLAIM (96)`   |
+| Agent identity not recognized (edge case)           | `UNRECOGNIZED_INSTANCE_CLAIM (97)`    |
 
-Values follow AR4SI trust levels:
-
-- `2` = **affirming**
-- `48` = **warning**
-- `96` = **contraindicated**
-- `0` = **none**
+**→ Sources**: `ak_tpm`, `pubkey`, `json_response.results.quote`, `agent.agent_id`
 
 ---
+
+### `hardware`
+
+| Condition                                                     | TrustClaim                            |
+|----------------------------------------------------------------|----------------------------------------|
+| Quote valid, no hardware revocation detected                   | `GENUINE_HARDWARE_CLAIM (2)`          |
+| Known hardware vulnerability (e.g., IMA or PCR mismatch)       | `UNSAFE_HARDWARE_CLAIM (32)`         |
+| Quote crypto fails                                             | `CONTRAINDICATED_HARDWARE_CLAIM (96)`|
+
+**→ Sources**: `quote`, verifier decision, `ak_tpm`, TPM endorsement (if available)
+
+---
+
+### `executables`
+
+| Condition                                                                 | TrustClaim                              |
+|----------------------------------------------------------------------------|------------------------------------------|
+| IMA log verified, no violation                                             | `APPROVED_RUNTIME_CLAIM (2)`            |
+| IMA log verified, but warning in runtime policy                           | `UNSAFE_RUNTIME_CLAIM (32)`             |
+| IMA missing / policy not applied / agent sent invalid measurements        | `UNRECOGNIZED_RUNTIME_CLAIM (33)`       |
+| IMA verification failed due to contradiction                              | `CONTRAINDICATED_RUNTIME_CLAIM (96)`    |
+
+**→ Sources**: `agent.ima_pcrs`, `pcr10`, `runtime_policy`, `next_ima_ml_entry`
+
+---
+
+### `configuration`
+
+| Condition                                        | TrustClaim                             |
+|--------------------------------------------------|-----------------------------------------|
+| `runtime_policy` exists and passes validation    | `APPROVED_CONFIG_CLAIM (2)`            |
+| `runtime_policy` present, passes with warnings   | `NO_CONFIG_VULNS_CLAIM (3)`           |
+| Config failure detected (e.g., IMA PCR mismatch) | `UNSAFE_CONFIG_CLAIM (32)`             |
+| Runtime policy parsing fails or is null          | `UNSUPPORTABLE_CONFIG_CLAIM (96)`      |
+
+**→ Sources**: `runtime_policy`, `agent.tpm_policy`
+
+---
+
+### `status` (Submod-Level)
+
+| Overall Outcome from Verifier                  | EAR Status        |
+|------------------------------------------------|-------------------|
+| `status == "Success"`                          | `"affirming"`     |
+| `status == "Fail"` or quote/IMA mismatch       | `"warning"`       |
+| Quote or crypto check failed                   | `"contraindicated"` |
+
+**→ Source**: `json_response.status`, error handling from verifier (`record.py`)
+
+---
+
 
 ### Example Output (Simplified)
 
@@ -121,12 +155,13 @@ Values follow AR4SI trust levels:
   "ear.raw-evidence": "<base64 TPM quote>",
   "eat.nonce": "zgI4RH6ER7HHk7vY7bez",
   "submods": {
-    "d432fbb3-d2f1-4a97-9ef7-75bd81c00000": {
+    "keylime-tpm": {
       "ear.status": "affirming",
       "ear.trustworthiness-vector": {
-        "instance-identity": 2,
+        "instance_identity": 2,
+        "hardware": 2,
         "executables": 2,
-        "hardware": 2
+        "configuration": 2,
       },
       "ear.appraisal-policy-id": "urn:keylime:runtime-policy:v1"
     }
