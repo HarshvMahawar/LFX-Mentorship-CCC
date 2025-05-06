@@ -170,8 +170,8 @@ All TPM-related evidence should be placed in a **single submod** named:
 | Condition                                           | TrustClaim                            |
 |-----------------------------------------------------|----------------------------------------|
 | Quote valid, AK present, no revocation              | `TRUSTWORTHY_INSTANCE_CLAIM (2)`      |
-| Quote invalid (e.g., missing or crypto error)       | `UNTRUSTWORTHY_INSTANCE_CLAIM (96)`   |
-| Agent identity not recognized (edge case)           | `UNRECOGNIZED_INSTANCE_CLAIM (97)`    |
+| Quote invalid (e.g., AK not matches)                | `UNTRUSTWORTHY_INSTANCE_CLAIM (96)`   |
+| Quote validation fails                              | `UNRECOGNIZED_INSTANCE_CLAIM (97)`    |
 
 **→ Sources**: `ak_tpm`, `pubkey`, `json_response.results.quote`, `agent.agent_id`
 
@@ -182,8 +182,8 @@ All TPM-related evidence should be placed in a **single submod** named:
 | Condition                                                     | TrustClaim                            |
 |----------------------------------------------------------------|----------------------------------------|
 | Quote valid, no hardware revocation detected                   | `GENUINE_HARDWARE_CLAIM (2)`          |
-| Known hardware vulnerability (e.g., IMA or PCR mismatch)       | `UNSAFE_HARDWARE_CLAIM (32)`         |
-| Quote crypto fails                                             | `CONTRAINDICATED_HARDWARE_CLAIM (96)`|
+| Known hardware vulnerability                                   | `UNSAFE_HARDWARE_CLAIM (32)`         |
+| Quote crypto fails (e.g., IMA or PCR mismatch)                 | `CONTRAINDICATED_HARDWARE_CLAIM (96)`|
 
 **→ Sources**: `quote`, verifier decision, `ak_tpm`, TPM endorsement (if available)
 
